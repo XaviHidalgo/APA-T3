@@ -104,7 +104,7 @@ class Vector:
 
         return -(-self + other)
 
-    def __rsub__(self, other):     # No puede ser __rsub__ = __sub__
+    def __rsub__(self, other):
         """
         Método reflejado de la resta, usado cuando el primer elemento no pertenece a la clase Vector.
         """
@@ -113,7 +113,7 @@ class Vector:
 
     def __mul__(self, other):
         """
-        Función para multiplicar un vector con otro vector o numero
+        multiplicar un vector con otro vector o numero
         """
         if isinstance(other,(int,float,complex)):
             return Vector([valor * other for valor in self])
@@ -124,7 +124,7 @@ class Vector:
  
     def __matmul__(self,other):
         """
-        Función para calcular el producto escalar de dos vectores
+        producto escalar de dos vectores
         """
         v = Vector([valor * other for valor, other in zip(self, other)])
         escalar = 0
@@ -136,25 +136,25 @@ class Vector:
 
     def __floordiv__(self, other):
         """
-        Función para calcular la componente tangencial(paralela) dos vectores
+        componente tangencial(paralela) dos vectores
         """
         return ((self @ other ) / (other @ other)) * other 
     
     def __rfloordiv__(self, other):
         """
-        Función para calcular la componente tangencial(paralela) dos vectores
+        componente tangencial dos vectores
 
         """
         return ((other @ self ) / (self @ self)) * self
     
     def __mod__(self, other):
         """
-        Función para calcular la componente normal(perpendicular) dos vectores
+        componente normal(perpendicular) dos vectores
         """
         return self - (self // other)
 
     def __rmod__(self, other):
         """
-        Función para calcular la componente normal(perpendicular) dos vectores
+        ¡componente normal dos vectores
         """
         return other - (other // self)
