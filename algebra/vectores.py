@@ -1,7 +1,33 @@
 """
     Tercera tarea de APA - manejo de vectores
 
-    Nombre y apellidos:
+    Nombre y apellidos: Xavier Hidalgo
+
+
+    Pruebas
+
+    >>> Vector([1, 2, 3]) *2 
+    Vector([2, 4, 6])
+
+
+    >>> 2 * Vector([1, 2, 3])
+    Vector([2, 4, 6])
+
+
+    >>> Vector([1, 2, 3]) * Vector([4, 5, 6])
+    Vector([4, 10, 18])
+
+
+    >>> Vector([1, 2, 3]) @ Vector([4, 5, 6])
+    32
+
+
+    >>> Vector([2, 1, 2]) // Vector([0.5, 1, 0.5])
+    Vector([1.0, 2.0, 1.0])
+
+
+    >>> Vector([2, 1, 2]) % Vector([0.5, 1, 0.5])
+    Vector([1.0, -1.0, 1.0])
 """
 
 class Vector:
@@ -85,3 +111,50 @@ class Vector:
 
         return -self + other
 
+    def __mul__(self, other):
+        """
+        Función para multiplicar un vector con otro vector o numero
+        """
+        if isinstance(other,(int,float,complex)):
+            return Vector([valor * other for valor in self])
+        else:
+            return Vector([valor * other for valor, other in zip(self, other)])
+    
+    __rmul__ = __mul__
+ 
+    def __matmul__(self,other):
+        """
+        Función para calcular el producto escalar de dos vectores
+        """
+        v = Vector([valor * other for valor, other in zip(self, other)])
+        escalar = 0
+        for i in range(len(v)):
+            escalar += v[i]
+        return escalar 
+
+    __rmatmul__ = __matmul__ 
+
+    def __floordiv__(self, other):
+        """
+        Función para calcular la componente tangencial(paralela) dos vectores
+        """
+        return ((self @ other ) / (other @ other)) * other 
+    
+    def __rfloordiv__(self, other):
+        """
+        Función para calcular la componente tangencial(paralela) dos vectores
+
+        """
+        return ((other @ self ) / (self @ self)) * self
+    
+    def __mod__(self, other):
+        """
+        Función para calcular la componente normal(perpendicular) dos vectores
+        """
+        return self - (self // other)
+
+    def __rmod__(self, other):
+        """
+        Función para calcular la componente normal(perpendicular) dos vectores
+        """
+        return other - (other // self)
