@@ -158,3 +158,9 @@ class Vector:
         ¡componente normal dos vectores
         """
         return other - (other // self)
+
+
+import doctest
+
+if __name__ == "__main__":
+    doctest.testmod(verbose=True)
